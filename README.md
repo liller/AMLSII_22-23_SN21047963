@@ -81,6 +81,16 @@ If all the dependencies required for the current project are already installed a
 ```
 python main.py
 ```
+You could also specify the graphics card on which to execute the program with the following command
+```
+CUDA_VISIBLE_DEVICES=" " python main.py 
+```
+Or if you like using the Notebook to run the code, you could also do the following command before import external library.
+```
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = ' '
+```
+
 The program will read the images from the Datasets directory and automatically create a new folder to store the test set, and then start pre-processing, model building, model training, prediction and evaluation process. 
 
 **Note**: when you copy the datasets to the Datasets directory, you only need to copy the "train_images" folder. The program will automatically divide the test set from the above datasets and create a new directory to store the test data. The ratio of training set, validation set and test set is 8:1:1. 
