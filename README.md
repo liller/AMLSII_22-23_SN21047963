@@ -4,13 +4,11 @@ This report discusses the effectiveness of using multiple Convolutional Neural N
 
 
 The final accuracy results is shown in the following table:
-|  | Task A1 | Task A2 | Task B1 | Task B2 |
-| :----:| :----:| :----: |:----: |:----: |
-| CNN1 | 91% | 81% | 100% | 82% |
-| CNN1(VGG) | / | / | / | 70.2% |
-| SVM | 88% | 83% | / | / |
-| SVM(&detector) | 98% | 72% | 60.7% | 71% |
-| SVM(&landmarks) | / | 90% | / | / |
+|  | Base CNN | VGG | ResNet | ViT | Ensemble |
+| :----:| :----:| :----: |:----: |:----: |:----: |
+| Marco weighted F1-Score | 66% | 79% | 84% | 81% | 84% |
+| Marco weighted F1-Score | 45% | 64% | 70% | 69% | 73% |
+Specific hyperparameters and techniques can be found at the end of instruction.
 
 ## Role of each file
 The current project structure is shown below
@@ -42,18 +40,22 @@ The current project structure is shown below
 └── main.py
 
 ```
-**main**: Contains all the core functions that will be executed sequentially for data loading, pre-processing, splitting dataset, data augmentation, model instance creation, model training, result prediction and evaluations.
+**main**: Contains all the core functions that will be executed sequentially for data loading, pre-processing, splitting dataset, data augmentation, model instance creation, model training, result prediction and evaluations. 
 
-. 
-**Modules**: Contains two files including pre_processing and results_visualization. 
+**Modules**: Contains two files including pre_processing and results_visualization. Pre_processing do performing image processing such as normalization on the image data, divide the training set, validation set and test set. Results_visualization do plotting accuracy results and loss value curves, plotting prediction result confusion matrix.
+
 **Base_Model**: Contains  2 block basic CNN model and 3 block basic CNN model. 
+
 **VGG**: Contains 3 models trained by different approaches in transfer learning field, including training as a feature extractor. training by fine-tuning and training from scratch. 
-**ResNet** 
+
+**ResNet**: Contains model of ResNet50
+
 **Transformer**: Contains ViT_b16 and ViT_b32 pretrained model. 
+
 **Ensemble_Model**: Contains the ensemble model of ResNet50 and ViT_b16. 
+
 **environment.yml**: Contain all the dependencies this project need. 
 
-## Requirements
 
 ## How to start
 ### 1. Setup
@@ -95,17 +97,17 @@ The program will read the images from the Datasets directory and automatically c
 
 **Note**: when you copy the datasets to the Datasets directory, you only need to copy the "train_images" folder. The program will automatically divide the test set from the above datasets and create a new directory to store the test data. The ratio of training set, validation set and test set is 8:1:1. 
 
-Due to the monthly limitation of Git LFS uploading large files, it is not possible to upload the trained model files to github, so it will take some time to train all the model. Specific hyperparameters can be found at the end instruction.
+Due to the monthly limitation of Git LFS uploading large files, it is not possible to upload the trained model files to github, so it will take some time to train all the model. 
 
 
 
-## CNN Model paramater
+## Base Model 
 
-| model | input size  |  optimizer | learning rate | batch_size | epochs |
-| :----:| :----:| :----: |:----: |:----: | :----: |
-| CNN1(Task A) | (218,178,3) | RMSprop | 0.001 | 32 | 30 | 
-| CNN1(Task B) | (500,500,3) | RMSprop | 0.001 with ReduceLROnPlateau callback| 32 | 30 | 
-| CNN2 |（224，224，3）  |  Adam|  0.01 with ReduceLROnPlateau callbacks| 32 | 30 | 
+| Model Description | Input Size | Optimiser |  LR  |  Class Weight |  Data Augmentation | Batch Size  | Epochs |
+| :----:| :----:| :----: |:----: |:----: | :----: | :----: | :----: |
+| Base model | (224,224,3) | RMSprop | 0.001 | 32 | 30 |  30 |  30 | 
+| Add more layers and droupout | (500,500,3) | RMSprop | 0.001 with ReduceLROnPlateau callback| 32 | 30 |  30 |  30 | 
+
 
 ## SVM Model paramater 
 | model | input size  |  kernal | 
