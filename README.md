@@ -42,7 +42,7 @@ The current project structure is shown below
 └── main.py
 
 ```
-**main**: Contains all the core functions that will be executed sequentially for data loading, pre-processing, splitting dataset, data augmentation, model instance creation, model training, result prediction and evaluations. 
+**main.py**: Contains all the core functions that will be executed sequentially for data loading, pre-processing, splitting dataset, data augmentation, model instance creation, model training, result prediction and evaluations. 
 
 **Modules**: Contains two files including pre_processing and results_visualization. Pre_processing do performing image processing such as normalization on the image data, divide the training set, validation set and test set. Results_visualization do plotting accuracy results and loss value curves, plotting prediction result confusion matrix.
 
@@ -123,9 +123,9 @@ Due to the monthly limitation of Git LFS uploading large files, it is not possib
 | Model Description | Input Size | Optimiser |  LR  |  Class_weight |  Data_Aug | Batch Size  | Epochs | Marco weighted F1-Score | Marco avg F1-Score |
 | :----:| :----:| :----: |:----: |:----: | :----: | :----: | :----: | :----: | :----: |
 | Feature extractor | (224,224,3) | / | / | / | / | / |  / | 71% | 19% |
-| Fine-tune by freezing 2 block | (224,224,3) | Adam | 2e-5 with ReduceLROnPlateau | / | / | 64 |  30 |  79% | 64% |
-| Fine-tune by freezing 2 block | (224,224,3) | Adam | 3e-6 with ReduceLROnPlateau | True | / | 64 |  30 |  67% | 55% |
-| Training from scratch | (224,224,3) | Adam | 2e-5 with ReduceLROnPlateau | / | / | 64 |  30 |  74% | 56% |
+| Training from scratch | (224,224,3) | Adam | 2e-5 with ReduceLROnPlateau | / | / | 256 |  30 |  74% | 56% |
+| Fine-tune by freezing 2 block | (224,224,3) | Adam | 2e-5 with ReduceLROnPlateau | / | / | 256 |  30 |  79% | 64% |
+| Fine-tune by freezing 2 block | (224,224,3) | Adam | 3e-6 with ReduceLROnPlateau | True | / | 256 |  30 |  67% | 55% |
 
 
 ### ResNet Model 
@@ -155,7 +155,7 @@ Due to the monthly limitation of Git LFS uploading large files, it is not possib
 
 | Model Description | Input Size | Optimiser |  LR  |  Class_weight |  Data_Aug | Batch Size  | Epochs | Marco weighted F1-Score | Marco avg F1-Score |
 | :----:| :----:| :----: |:----: |:----: | :----: | :----: | :----: | :----: | :----: |
-| Reset50 & ViT_b16 | (224,224,3) | Adam | 3e-6 with ReduceLROnPlateau | / | / | 256 |  50 |  84% | 73% |
+| Reset50 & ViT_b16 | (224,224,3) | Adam | 3e-6 with ReduceLROnPlateau | / | True | 256 |  50 |  84% | 73% |
 
 
 
