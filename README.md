@@ -1,5 +1,5 @@
 # AMLSII__22-23_SN21047963
-## Intro
+## Description
 This report discusses the effectiveness of using multiple Convolutional Neural Networks (CNNs) and Transformer architectures for image multi-classification tasks in cassava leaf disease recognition. I conducted experiments on the cassava leaf disease dataset using basic CNN networks, VGG, ResNet, and Vision Transformer models. To enhance the model's robustness and generalization ability, I also introduced additional techniques such as Batch Normaliza-tion, Dropout, Data Augmentation, and Class Weight. The experimental results show that, with the reasonable use of transfer learning (fine-tuning) techniques, the use of the more complex ResNet model performs better than the basic CNN model on the test set, while also demonstrating the excellent performance and potential of the Vision Trans-former architecture in the field of image vision. Additional-ly, the data augmentation, dropout, and BN techniques used in the experiment can effectively alleviate the overfitting and gradient vanishing phenomena that may occur.
 
 
@@ -8,7 +8,9 @@ The final accuracy results is shown in the following table:
 | :----:| :----:| :----: |:----: |:----: |:----: |
 | Marco weighted F1-Score | 66% | 79% | 84% | 81% | 84% |
 | Marco avg F1-Score | 45% | 64% | 70% | 69% | 73% |
-Specific hyperparameters and techniques can be found at the end of instruction.
+
+Specific hyperparameters and techniques can be found at the end of instruction. 
+
 
 ## Role of each file
 The current project structure is shown below
@@ -57,7 +59,7 @@ The current project structure is shown below
 **environment.yml**: Contain all the dependencies this project need. 
 
 
-## How to start
+## Getting started
 ### 1. Setup
 1. Create a new virtual conda environment based on the provided environment.yml file and execute the following statement in the project path. 
 
@@ -103,6 +105,9 @@ Due to the monthly limitation of Git LFS uploading large files, it is not possib
 ## Model Performance & Hyperparamater
 
 ### Base Model 
+<div align=center>
+<img src="https://github.com/liller/AMLSII__22-23_SN21047963/blob/master/Model_architecture/Base_model_3Block.jpg" width="814" height="300">
+</div>
 
 | Model Description | Input Size | Optimiser |  LR  |  Class_weight |  Data_Aug | Batch Size  | Epochs | Marco weighted F1-Score | Marco avg F1-Score |
 | :----:| :----:| :----: |:----: |:----: | :----: | :----: | :----: | :----: | :----: |
@@ -111,8 +116,9 @@ Due to the monthly limitation of Git LFS uploading large files, it is not possib
 
 
 ### VGG Model 
-![截屏2023-04-05 00 14 56](https://user-images.githubusercontent.com/49867106/229942728-509be89b-f6c7-45ac-9983-d9d1ad5e04d0.png)
-
+<div align=center>
+<img src="https://github.com/liller/AMLSII__22-23_SN21047963/blob/master/Model_architecture/VGG.jpg">
+</div>
 
 | Model Description | Input Size | Optimiser |  LR  |  Class_weight |  Data_Aug | Batch Size  | Epochs | Marco weighted F1-Score | Marco avg F1-Score |
 | :----:| :----:| :----: |:----: |:----: | :----: | :----: | :----: | :----: | :----: |
@@ -123,6 +129,7 @@ Due to the monthly limitation of Git LFS uploading large files, it is not possib
 
 
 ### ResNet Model 
+
 
 | Model Description | Input Size | Optimiser |  LR  |  Class_weight |  Data_Aug | Batch Size  | Epochs | Marco weighted F1-Score | Marco avg F1-Score |
 | :----:| :----:| :----: |:----: |:----: | :----: | :----: | :----: | :----: | :----: |
