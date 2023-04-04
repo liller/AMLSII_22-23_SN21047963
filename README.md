@@ -7,7 +7,7 @@ The final accuracy results is shown in the following table:
 |  | Base CNN | VGG | ResNet | ViT | Ensemble |
 | :----:| :----:| :----: |:----: |:----: |:----: |
 | Marco weighted F1-Score | 66% | 79% | 84% | 81% | 84% |
-| Marco weighted F1-Score | 45% | 64% | 70% | 69% | 73% |
+| Marco avg F1-Score | 45% | 64% | 70% | 69% | 73% |
 Specific hyperparameters and techniques can be found at the end of instruction.
 
 ## Role of each file
@@ -100,22 +100,57 @@ The program will read the images from the Datasets directory and automatically c
 Due to the monthly limitation of Git LFS uploading large files, it is not possible to upload the trained model files to github, so it will take some time to train all the model. 
 
 
+## Model Performance & Hyperparamater
 
-## Base Model 
+### Base Model 
 
-| Model Description | Input Size | Optimiser |  LR  |  Class Weight |  Data Augmentation | Batch Size  | Epochs |
-| :----:| :----:| :----: |:----: |:----: | :----: | :----: | :----: |
-| Base model | (224,224,3) | RMSprop | 0.001 | 32 | 30 |  30 |  30 | 
-| Add more layers and droupout | (500,500,3) | RMSprop | 0.001 with ReduceLROnPlateau callback| 32 | 30 |  30 |  30 | 
+| Model Description | Input Size | Optimiser |  LR  |  Class_weight |  Data_Aug | Batch Size  | Epochs | Marco weighted F1-Score | Marco avg F1-Score |
+| :----:| :----:| :----: |:----: |:----: | :----: | :----: | :----: | :----: | :----: |
+| Base model | (800,600,3) | RMSprop | 0.001 | / | / | 64 |  30 | 65% | 34% |
+| Add more layers and droupout | (800,600,3) | RMSprop | 0.001 with ReduceLROnPlateau | / | / | 64 |  30 |  66% | 45% |
 
 
-## SVM Model paramater 
-| model | input size  |  kernal | 
-| :----:| :----:| :----: |
-| SVM(Task A & B)  | (5000, 38804) | linear | 
-| SVM(Task A ) with detector | (4868, 128) |linear  |
-| SVM(Task B) with detector | (7984, 128) |poly  | 
-| SVM(Task A2) with landmarks  | (4833, 136) | linear |  
+### VGG Model 
+![截屏2023-04-05 00 14 56](https://user-images.githubusercontent.com/49867106/229942728-509be89b-f6c7-45ac-9983-d9d1ad5e04d0.png)
+
+
+| Model Description | Input Size | Optimiser |  LR  |  Class_weight |  Data_Aug | Batch Size  | Epochs | Marco weighted F1-Score | Marco avg F1-Score |
+| :----:| :----:| :----: |:----: |:----: | :----: | :----: | :----: | :----: | :----: |
+| Feature extractor | (224,224,3) | / | / | / | / | / |  / | 71% | 19% |
+| Fine-tune by freezing 2 block | (224,224,3) | Adam | 2e-5 with ReduceLROnPlateau | / | / | 64 |  30 |  79% | 64% |
+| Fine-tune by freezing 2 block | (224,224,3) | Adam | 3e-6 with ReduceLROnPlateau | True | / | 64 |  30 |  67% | 55% |
+| Training from scratch | (224,224,3) | Adam | 2e-5 with ReduceLROnPlateau | / | / | 64 |  30 |  74% | 56% |
+
+
+### ResNet Model 
+
+| Model Description | Input Size | Optimiser |  LR  |  Class_weight |  Data_Aug | Batch Size  | Epochs | Marco weighted F1-Score | Marco avg F1-Score |
+| :----:| :----:| :----: |:----: |:----: | :----: | :----: | :----: | :----: | :----: |
+| ResNet50 | (224,224,3) | Adam | 3e-6 with ReduceLROnPlateau | / | / | 256 |  30 |  75% | 58% |
+| ResNet50 | (224,224,3) | Adam | [1.15e-5, 0.001] with lr schedule | / | / | 256 |  30 |  83% | 69% |
+| ResNet50 | (224,224,3) | Adam | [1.15e-5, 0.001] with lr schedule | / | True | 256 |  30 |  84% | 70% |
+| ResNet50 (Fine-tune) | (224,224,3) | Adam | 3e-6 with ReduceLROnPlateau | / | / | 256 |  30 |  74% | 56% |
+
+
+
+### Vision Transformer Model 
+
+| Model Description | Input Size | Optimiser |  LR  |  Class_weight |  Data_Aug | Batch Size  | Epochs | Marco weighted F1-Score | Marco avg F1-Score |
+| :----:| :----:| :----: |:----: |:----: | :----: | :----: | :----: | :----: | :----: |
+| Vit_b32 | (224,224,3) | Adam | 3e-6 with ReduceLROnPlateau | / | / | 256 |  30 |  77% | 62% |
+| Vit_b32 | (224,224,3) | Adam | 3e-6 with ReduceLROnPlateau | / | True | 256 |  50 |  79% | 65% |
+| Vit_b32 | (224,224,3) | Adam | [3.03e-7, 1e-5] with lr schedule | True | / | 256 |  50 |  66% | 56% |
+| Vit_b16 | (224,224,3) | Adam | 3e-6 with ReduceLROnPlateau | / | True | 256 |  30 |  81% | 69% |
+
+
+
+### Ensemble Model 
+
+| Model Description | Input Size | Optimiser |  LR  |  Class_weight |  Data_Aug | Batch Size  | Epochs | Marco weighted F1-Score | Marco avg F1-Score |
+| :----:| :----:| :----: |:----: |:----: | :----: | :----: | :----: | :----: | :----: |
+| Reset50 & ViT_b16 | (224,224,3) | Adam | 3e-6 with ReduceLROnPlateau | / | / | 256 |  50 |  84% | 73% |
+
+
 
 
 
