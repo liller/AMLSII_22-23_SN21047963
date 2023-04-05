@@ -1,3 +1,7 @@
+"""Vit_b32 model contains the content about model construction, training and testing.
+
+"""
+
 import pandas as pd
 pd.options.mode.chained_assignment = None  # default='warn'
 import os
@@ -16,9 +20,12 @@ from keras.callbacks import ReduceLROnPlateau
 
 
 class Vit_b32:
+    """
+     Define class of Vit_b32 and compile
+
+    """
     def __init__(self):
-        # Set the CNN model
-        print("Construct Base_CNN model =====")
+        print("===== Construct Vit_b32 model =====")
         vit_model = vit.vit_b32(
             image_size=(224, 224),
             activation='softmax',
@@ -30,41 +37,66 @@ class Vit_b32:
         self.model = keras.Sequential([
             vit_model
         ],name = 'vision_transformer')
-        print("Summary of the Base_CNN model")
+        print("Summary of the Vit_b32 model")
         self.model.summary()
         optimizer = Adam(lr=3e-6)
         self.model.model.compile(optimizer = optimizer, loss="categorical_crossentropy", metrics=["accuracy"])
 
     def train(self, train_batch, valid_batch, path, epochs= 50, plot= True):
-         print("Training CNN model =====")
-         learning_rate_reduction = ReduceLROnPlateau(monitor="val_loss",
+        """
+        training model and plot the learning curves
+        Args:
+            train_batch: training set
+            valid_batch: validation set
+            path: path to save the learning curves
+        Returns:
+            result of training process contains accuracy and loss
+        """
+        print("===== Training Vit_b32 model =====")
+        learning_rate_reduction = ReduceLROnPlateau(monitor="val_loss",
                                                      patience=3,
                                                      verbose=1,
                                                      factor=0.5,
                                                      min_lr=0.0000001)
-         history = self.model.fit_generator(train_batch, steps_per_epoch=len(train_batch), validation_data = valid_batch,
+        history = self.model.fit_generator(train_batch, steps_per_epoch=len(train_batch), validation_data = valid_batch,
                                   validation_steps=len(valid_batch), epochs=epochs, callbacks=[learning_rate_reduction], verbose=1)
-         if plot:
-             plot_history(history, path)
-         return history
+        if plot:
+            plot_history(history, path)
+        return history
 
     def train_weights(self, train_batch, valid_batch, class_weights, path, epochs= 50, plot= True):
-         print("Training CNN model =====")
-         rng = [i for i in range(30)]
-         y = [self.lr_schedule(x) for x in rng]
-         print("Learning rate schedule: {:.3g} to {:.3g} to {:.3g}".format(y[0], max(y), y[-1]))
-         lr_callback = tf.keras.callbacks.LearningRateScheduler(self.lr_schedule, verbose=True)
+        """
+        training model with class_weights and plot the learning curves
+        Args:
+            train_batch: training set
+            valid_batch: validation set
+            path: path to save the learning curves
+        Returns:
+            result of training process contains accuracy and loss
+        """
+        print("Training Vit_b32 model =====")
+        rng = [i for i in range(30)]
+        y = [self.lr_schedule(x) for x in rng]
+        print("Learning rate schedule: {:.3g} to {:.3g} to {:.3g}".format(y[0], max(y), y[-1]))
+        lr_callback = tf.keras.callbacks.LearningRateScheduler(self.lr_schedule, verbose=True)
 
-         history = self.model.fit_generator(train_batch, steps_per_epoch=len(train_batch), validation_data = valid_batch,
+        history = self.model.fit_generator(train_batch, steps_per_epoch=len(train_batch), validation_data = valid_batch,
                                   validation_steps=len(valid_batch), epochs=epochs, callbacks=[lr_callback],
                                             verbose=1, class_weight= class_weights)
-         if plot:
-             plot_history(history, path)
-         return history
+        if plot:
+            plot_history(history, path)
+        return history
 
 
     def test(self, test_batch, confusion_mat=False):
-        print("Test CNN model on test set=====")
+        """
+        verify the model on test set
+        Args:
+            test_batch: test data set
+        Returns:
+            marco weighted F1-score
+        """
+        print("===== Test Vit_b32 model on test set=====")
         pred=self.model.predict_generator(test_batch, steps = len(test_batch), verbose=1)
         pred = np.round(pred)
         predicted_labels = np.array(np.argmax(pred, axis=1))
@@ -75,6 +107,13 @@ class Vit_b32:
         return score
 
     def lr_schedule(self, epoch):
+        """
+        control lr change
+        Args:
+            epoch: num of epoch
+        Returns:
+            lr during the amount of epochs
+        """
         LR_START = 0.00001
         LR_MAX = 0.00005 * 6
         LR_MIN = 0.0000001
