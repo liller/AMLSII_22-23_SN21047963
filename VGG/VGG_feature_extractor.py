@@ -1,3 +1,6 @@
+"""VGG_feature_extractor model contains the content about model construction and testing.
+
+"""
 import pandas as pd
 pd.options.mode.chained_assignment = None  # default='warn'
 import numpy as np
@@ -14,25 +17,31 @@ from keras.applications.vgg19 import VGG19
 
 
 class VGG_feature_extractor:
+    """
+     Define class of VGG_feature_extractor and compile
+
+    """
     def __init__(self):
-        # Set the CNN model
-        print("Construct Base_CNN model =====")
+        print("===== Construct VGG_feature_extractor model =====")
         base_model = VGG19(weights="imagenet", include_top=False, input_shape=(224, 224, 3))
         self.model = Sequential([
             base_model,
             GlobalAveragePooling2D(),
             Dense(5, activation='softmax')
         ])
-        print("Summary of the Base_CNN model")
+        print("Summary of the VGG_feature_extractor model")
         self.model.summary()
-        # for layer in self.model.layers[0:21]:
-        #     layer.trainable = False
-        # optimizer = RMSprop(lr=0.001, rho=0.9, epsilon=1e-08, decay=0.0)
-        # self.model.model.compile(optimizer = optimizer, loss="categorical_crossentropy", metrics=["accuracy"])
 
 
     def test(self, test_batch, confusion_mat=False):
-        print("Test CNN model on test set=====")
+        """
+        verify the model on test set
+        Args:
+            test_batch: test data set
+        Returns:
+            marco weighted F1-score
+        """
+        print("===== Test CNN VGG_feature_extractor on test set=====")
         pred=self.model.predict_generator(test_batch, steps = len(test_batch), verbose=1)
         pred = np.round(pred)
         predicted_labels = np.array(np.argmax(pred, axis=1))
