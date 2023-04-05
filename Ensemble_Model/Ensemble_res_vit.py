@@ -1,3 +1,6 @@
+"""Ensemble model contains the content about model construction and testing.
+
+"""
 import pandas as pd
 pd.options.mode.chained_assignment = None  # default='warn'
 import os
@@ -11,9 +14,12 @@ from Transformer.ViT_b16 import *
 
 
 class Ensemble_model:
+    """
+     Define class of Ensemble_model and compile
+
+    """
     def __init__(self):
-        # Set the CNN model
-        print("Construct Base_CNN model =====")
+        print("===== Construct Ensemble_model model =====")
         self.resnet_model = ResNet()
         self.resnet_model.load_weights('./model/Pre-trained-resnet_aug.h5')
         self.vit_model = Vit_b16()
@@ -21,7 +27,14 @@ class Ensemble_model:
 
 
     def test(self, test_batch, confusion_mat=False):
-        print("Test CNN model on test set=====")
+        """
+        verify the model on test set
+        Args:
+            test_batch: test data set
+        Returns:
+            marco weighted F1-score
+        """
+        print("===== Test Ensemble_model model on test set=====")
         resnet_pred = self.resnet_model.predict_generator(test_batch, steps=len(test_batch), verbose=1)
         vit_pred = self.vit_model.predict_generator(test_batch, steps=len(test_batch), verbose=1)
         total_pred = 0.5 * resnet_pred + 0.5 * vit_pred
