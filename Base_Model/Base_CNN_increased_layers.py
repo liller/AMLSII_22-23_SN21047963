@@ -5,7 +5,6 @@ import pandas as pd
 pd.options.mode.chained_assignment = None  # default='warn'
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
-from Modules.results_visualization import plot_confusion_matrix, plot_history
 import numpy as np
 np.random.seed(2)
 from sklearn.metrics import f1_score
@@ -13,6 +12,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, Conv2D, MaxPool2D
 from keras.optimizers import RMSprop
 from keras.callbacks import ReduceLROnPlateau
+from Modules.results_visualization import plot_confusion_matrix, plot_history
 
 
 
