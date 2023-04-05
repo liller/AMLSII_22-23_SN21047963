@@ -6,6 +6,12 @@ import pandas as pd
 
 
 def plot_history(history,path):
+    """
+    plot accuracy and loss learning curves
+    Args:
+        history: the results of training process, value of fit_generator
+        path: path to store plot
+    """
     fig, ax = plt.subplots(2, 1)
     ax[0].plot(history.history['loss'], color='b', label="Training loss")
     ax[0].plot(history.history['val_loss'], color='r', label="Validation loss", axes=ax[0])
@@ -18,6 +24,12 @@ def plot_history(history,path):
 
 
 def plot_confusion_matrix(y_test_array,y_predict):
+    """
+    plot confusion matrix on test set
+    Args:
+        y_test_array: the real label of test set
+        y_predict: the prediction of rest set
+    """
     disp = confusion_matrix(y_test_array, y_predict, normalize='true')
     plt.figure(figsize=(5, 5))
     sns.heatmap(disp,annot=True,cmap='Blues')

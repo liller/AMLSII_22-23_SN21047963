@@ -1,4 +1,7 @@
+"""pre_processing contains the process of loading and splitting dataset, using data generator to read data by batches,
+ doing data augmentation to imitate "increase the size of data" to make model more robust.
 
+"""
 
 import numpy as np
 import pandas as pd
@@ -16,7 +19,6 @@ from keras.preprocessing.image import ImageDataGenerator
 label = './Dataset/train.csv'
 dataset = './Dataset/train_images/'
 dataset_test = './Dataset/test_images/'
-#划分train test后的label分布
 train_labels_path = './Dataset/train_labels.csv'
 test_labels_path = './Dataset/test_labels.csv'
 
@@ -24,6 +26,11 @@ test_labels_path = './Dataset/test_labels.csv'
 
 
 def mkdir(img_path_test):
+    """
+    create a new folder for storing test set
+    Args:
+        img_path_test: path  to store test set
+    """
     folder = os.path.exists(img_path_test)
     if not folder:  # Determine if a folder exists if not then create as a folder
         os.makedirs(img_path_test)  # makedirs creates the path if it does not exist when creating the file
@@ -35,6 +42,15 @@ def mkdir(img_path_test):
 
 
 def loading_and_splitting_data(img_path, img_path_test, test_ratio = 0.10):
+    """
+    Loading, splittig and ordering data
+    Args:
+        img_path: path to store train set
+        img_path_test: path to store test set
+    Returns:
+        train_label: return a df contains the label of train set
+        test_label: return a df contains the label of test set
+    """
     mkdir(img_path_test)
     print('# Loading and transforming dataset ========')
     print('# Randomly dividing data into two directory ====')
@@ -80,6 +96,17 @@ def loading_and_splitting_data(img_path, img_path_test, test_ratio = 0.10):
 
 
 def data_generator(train_labels_path,test_labels_path):
+    """
+    Loading data by batches
+    Args:
+        train_labels_path: path to store label of training set
+        test_labels_path: path to store label of test set
+    Returns:
+        train_batch: return training data by batch
+        valid_batch: return validation data by batch
+        test_batch: return test data by batch
+        class_weights: return the weigths of imbalanced dataset
+    """
     train_labels = pd.read_csv(train_labels_path, usecols=[1, 2])
     train_labels['image_id'] = train_labels['image_id'].astype(str)
     train_labels['label'] = train_labels['label'].astype(str)
@@ -130,6 +157,17 @@ def data_generator(train_labels_path,test_labels_path):
     return train_batch, valid_batch, test_batch, class_weights
 
 def data_augmentation(train_labels_path,test_labels_path ):
+    """
+    Loading data with data augmentation by batches
+    Args:
+        train_labels_path: path to store label of training set
+        test_labels_path: path to store label of test set
+    Returns:
+        train_batch: return training data after data augmentation  by batch
+        valid_batch: return validation data after data augmentation by batch
+        test_batch: return test data after data augmentation by batch
+        class_weights: return the weights of imbalanced dataset
+    """
 
     train_labels = pd.read_csv(train_labels_path, usecols=[1, 2])
     train_labels['image_id'] = train_labels['image_id'].astype(str)
@@ -191,6 +229,13 @@ def data_augmentation(train_labels_path,test_labels_path ):
 
 
 def data_augment(image):
+    """
+    Transformations of the process of data augmentation
+    Args:
+        image: original sample from dataset
+    Returns:
+        image: sample after data augmentation
+    """
     p_spatial = tf.random.uniform([], 0, 1.0, dtype=tf.float32)
     p_rotate = tf.random.uniform([], 0, 1.0, dtype=tf.float32)
     p_pixel_1 = tf.random.uniform([], 0, 1.0, dtype=tf.float32)
