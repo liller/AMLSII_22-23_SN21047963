@@ -6,7 +6,6 @@ import pandas as pd
 pd.options.mode.chained_assignment = None  # default='warn'
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
-from Modules.results_visualization import plot_confusion_matrix, plot_history
 import numpy as np
 np.random.seed(2)
 from sklearn.metrics import f1_score
@@ -15,6 +14,7 @@ import tensorflow as tf
 from keras.optimizers import Adam
 from vit_keras import vit
 from keras.callbacks import ReduceLROnPlateau
+from Modules.results_visualization import plot_confusion_matrix, plot_history
 
 
 
