@@ -26,12 +26,28 @@ The current project structure is shown below
 ├── Ensemble_Model
 │   └── Ensemble_res_vit.py
 ├── Model
+├── Model_architecture
+│   ├── Base_model.jpg
+│   ├── Base_model_3Block.jpg
+│   └── VGG.jpg
 ├── Modules
 │   ├── pre_processing.py
 │   └── results_visualization.py
+├── README.md
 ├── ResNet
 │   └── ResNet50.py
 ├── Results_img
+│   ├── Base_CNN_2Block.png
+│   ├── Base_CNN_3Block.png
+│   ├── ResNet50.png
+│   ├── ResNet50_aug.png
+│   ├── VGG_Fine_tune_weighted.png
+│   ├── VGG_fine_tune.png
+│   ├── VGG_scratch.png
+│   ├── ViT_b16_aug.png
+│   ├── ViT_b32.png
+│   ├── ViT_b32_aug.png
+│   └── ViT_b32_weighted.png
 ├── Transformer
 │   ├── ViT_b16.py
 │   └── ViT_b32.py
@@ -39,6 +55,7 @@ The current project structure is shown below
 │   ├── VGG_feature_extractor.py
 │   ├── VGG_finetune.py
 │   └── VGG_training_from_scratch.py
+├── environment.yml
 └── main.py
 
 ```
@@ -85,7 +102,7 @@ If all the dependencies required for the current project are already installed a
 ```
 python main.py
 ```
-You could also specify the graphics card on which to execute the program with the following command
+It could be better to save more time by training the model on GPU, you could specify a target GPU on which to execute the program with the following command
 ```
 CUDA_VISIBLE_DEVICES=" " python main.py 
 ```
