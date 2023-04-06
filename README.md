@@ -76,6 +76,36 @@ The current project structure is shown below
 **environment.yml**: Contain all the dependencies this project need. 
 
 
+
+## Packages required 
+
+**Pandas**: pandas is a fast, powerful, flexible and easy to use open source data analysis and manipulation tool,
+built on top of the Python programming language. 
+
+**Numpy**: It is a Python library that provides a multidimensional array object, various derived objects (such as masked arrays and matrices), and an assortment of routines for fast operations on arrays, including mathematical, logical, shape manipulation, sorting, selecting, I/O, discrete Fourier transforms, basic linear algebra, basic statistical operations, random simulation and much more. 
+
+**Keras**: Keras is a deep learning API written in Python, running on top of the machine learning platform TensorFlow. It was developed with a focus on enabling fast experimentation. Keras is the high-level API of TensorFlow which provides with the simple, flexible and powerful ability. 
+
+**sklearn**: Sklearn is a free software machine learning library for the Python programming language. It features various classification, regression and clustering algorithms including support-vector machines, random forests, gradient boosting, k-means and DBSCAN, and is designed to interoperate with the Python numerical and scientific libraries NumPy and SciPy.
+
+**cv2**: OpenCV-Python is a library of Python bindings designed to solve computer vision problems. 
+
+**matplotlib**:Matplotlib is a comprehensive library for creating static, animated, and interactive visualizations in Python.  
+
+
+**seaborn**:Seaborn is a Python data visualization library based on matplotlib. It provides a high-level interface for drawing attractive and informative statistical graphics.  
+
+**os**: This module provides a portable way of using operating system dependent functionality. 
+
+**random**:This module implements pseudo-random number generators for various distributions.
+
+**shutil**: The shutil module offers a number of high-level operations on files and collections of files. 
+
+
+
+
+
+
 ## Getting started
 ### 1. Setup
 1. Create a new virtual conda environment based on the provided environment.yml file and execute the following statement in the project path. 
